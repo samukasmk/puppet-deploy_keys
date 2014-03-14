@@ -1,0 +1,10 @@
+name          'samukasmk-deploy_keys'
+version       '0.1.0'
+source        'UNKNOWN'
+author        'samukasmk'
+license       'Apache License, Version 2.0'
+summary       'UNKNOWN'
+description   'UNKNOWN'
+project_page  'http://github.com/samukasmk/samukasmk-deploy_keys'
+
+dependency 'puppetlabs/stdlib'
