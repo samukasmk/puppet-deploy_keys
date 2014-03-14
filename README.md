@@ -12,5 +12,5 @@ class { "deploy_keys":
 }
 ```
 
-Please contribute with us:
+Please contribute with us, creating your pull request :
 https://github.com/samukasmk/samukasmk-deploy_keys.git
