@@ -11,3 +11,6 @@ class { "deploy_keys":
   user      => "root"
 }
 ```
+
+Please contribute with us:
+https://github.com/samukasmk/samukasmk-deploy_keys.git
