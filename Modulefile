@@ -1,5 +1,5 @@
 name          'samukasmk-deploy_keys'
-version       '0.2.8'
+version       '0.2.9'
 author        'samukasmk'
 license       'Apache License, Version 2.0'
 description   'Puppet module to manage deploy keys, for use example in (git clone)/(vcsrepo) actions.'
