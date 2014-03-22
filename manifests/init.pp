@@ -24,20 +24,50 @@
 #   Required: No
 #   Default: "/etc/puppet/.deploy_keys"
 #
+# [key_dest]
+#   Description: Static path for key file, like replacement of ${base_folder}/${user}/${key_name}
+#   Required: No
+#   Default: undef
+# 
 # === Variables
 #
-# [user_folder]
+# [key_folder]
 #   Description: The relative path of user's key folder
 #
 # [key_file]
 #   Description: The relative path of key
 #
-# === Examples
+# === Example 1: Basic Usage
+#
+# By default your keys will be stored in schema: "/etc/puppet/.deploy_keys/<my_username>/<my_deploy_key>"
 #
 #  class { "deploy_keys":
-#    key_name  => "my_deploy_key",
-#    source    => "puppet:///files/.../my_deploy_key",
-#    user      => "root"
+#    key_name     => "my_deploy_key",
+#    source       => "puppet:///files/.../my_deploy_key",
+#    user         => "my_username"
+#  }
+#
+# === Example 2: Defining different base folder in same schema
+#
+# If you wish, is possible store your keys in other folder, but in the same schema:
+# "/path/to/my/other/folder/\<username\>/\<my_deploy_key\>"
+#
+#  class { "deploy_keys":
+#    key_name     => "my_deploy_key",
+#    source       => "puppet:///files/.../my_deploy_key",
+#    user         => "root",
+#    base_folder  => "/path/to/my/other/folder",
+#  }
+#
+# === Example 3: Define the specific folder to key
+#
+# To the final example, your keys will be stored simply in "/root/.ssh/id_rsa"
+#
+#  class { "deploy_keys":
+#    key_name     => "my_deploy_key",
+#    source       => "puppet:///files/.../my_deploy_key",
+#    user         => "root",
+#    key_dest     => "/root/.ssh/id_rsa"
 #  }
 #
 # === Authors
