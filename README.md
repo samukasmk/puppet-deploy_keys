@@ -14,7 +14,7 @@ class { "deploy_keys":
 }
 ```
 
-By default your keys will be stored in "/etc/puppet/.deploy_keys/<username>/<my_deploy_key>"
+By default your keys will be stored in "/etc/puppet/.deploy_keys/\<username\>/\<my_deploy_key\>"
 
 
 
@@ -28,7 +28,7 @@ class { "deploy_keys":
 }
 ```
 
-Now your keys will be stored in "/usr/share/my_keys/<username>/<my_deploy_key>"
+Now your keys will be stored in "/usr/share/my_keys/\<username\>/\<my_deploy_key\>"
 
 
 Example 3: Define the specific folder to key 
