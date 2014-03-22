@@ -29,7 +29,7 @@
 # [user_folder]
 #   Description: The relative path of user's key folder
 #
-# [key_path]
+# [key_file]
 #   Description: The relative path of key
 #
 # === Examples
@@ -52,38 +52,49 @@
 class deploy_keys (
   $key_name,
   $source,
-  $user         = $deploy_keys::params::user,
-  $base_folder  = $deploy_keys::params::base_folder,
-  $user_folder  = $deploy_keys::params::user_folder,  
-) inherits deploy_keys::params {
+  $user         = "root",
+  $key_dest     = undef,
+  $base_folder  = "/etc/puppet/.deploy_keys",
+) {
 
-  $key_path     = "${base_folder}/${user}/${key_name}"
-
-  notify { "Ensuring folder: ${base_folder}": }
-
-  file { "${base_folder}" :
-    ensure    => directory,
-    owner     => $user,
-    group     => 'root',
-    mode      => '500',
+  if ($key_dest != undef) {
+    $key_folder = generate('/usr/bin/dirname', $key_dest)
+    $key_file   = $key_dest
+  } else {
+    $key_folder = "${base_folder}/${user}"
+    $key_file   = "${key_folder}/${key_name}"
   }
 
-  notify { "Ensuring folder: ${user_folder}": }
-  file { "${user_folder}" :
-    ensure    => directory,
-    owner     => $user,
-    group     => 'root',
-    mode      => '500',
-    require   => File["${base_folder}"]
+  Exec {
+    path      => '/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin',
+    user      => 'root',
   }
 
-  notify { "Ensuring deploy_keys file: ${key_path}": }
-  file { "${key_path}" :
-    ensure    => file,
+  notify { "Ensuring folder and subfolders exist: ${key_folder}": }
+  exec { "ensure_subfolders_exist":
+    command   => "mkdir -p ${key_folder}",
+  }
+
+  notify { "Ensuring folder owner: ${key_folder}": }
+  exec { "ensure_subfolders_owner":
+    command   => "chown ${user}:root ${key_folder}",
+    require   => Exec["ensure_subfolders_exist"]
+  }
+
+  notify { "Ensuring folder permission: ${key_folder}": }
+  exec { "ensure_folders_permission":
+    command   => "chmod 500 ${key_folder}",
+    require   => Exec["ensure_subfolders_exist"]
+  }  
+
+  notify { "Ensuring deploy_key file: ${key_file}": }
+  file { $key_file:
+    ensure    => present,
     owner     => $user,
     group     => 'root',
     mode      => '400',    
     source    => $source,
-    require   => File["${user_folder}"]
-  }  
+    require   => Exec["ensure_subfolders_exist"]
+  }
+
 }
