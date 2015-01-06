@@ -1,6 +1,8 @@
 samukasmk-deploy_keys
 =====================
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/samukasmk/puppet-deploy_keys?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Puppet module to manage deploy keys, for use example in (git clone)/(vcsrepo) actions.
 
 Goal: Store your private keys for secure deploys, avoiding unsafe ssh connections with user/password.
